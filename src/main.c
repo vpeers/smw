@@ -92,19 +92,6 @@ static struct RendererFuncs g_renderer_funcs;
 static GamepadInfo g_gamepad[2];
 
 extern Snes *g_snes;
-
-void NORETURN Die(const char *error) {
-  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, kWindowTitle, error, NULL);
-  fprintf(stderr, "Error: %s\n", error);
-  #ifdef __SWITCH__
-  PrintErrorMessageToScreen_a(
-        "\x1b[2;2HERROR: %s", error
-    );
-  #else
-  exit(1);
-  #endif
-}
-
 #ifdef __SWITCH__
 void PrintErrorMessageToScreen_a(const char* str, ...) {
     consoleInit(NULL);
@@ -121,6 +108,17 @@ void PrintErrorMessageToScreen_a(const char* str, ...) {
     consoleExit(NULL);
 }
 #endif
+void NORETURN Die(const char *error) {
+  SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, kWindowTitle, error, NULL);
+  fprintf(stderr, "Error: %s\n", error);
+  #ifdef __SWITCH__
+  PrintErrorMessageToScreen_a(
+        "\x1b[2;2HERROR: %s", error
+    );
+  #else
+  exit(1);
+  #endif
+}
 
 void Warning(const char *error) {
   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, kWindowTitle, error, NULL);
@@ -999,4 +997,5 @@ static void SwitchDirectory(void) {
       pos--;
   }
 }
+
 
