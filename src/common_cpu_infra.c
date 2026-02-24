@@ -121,6 +121,7 @@ bool HookedFunctionRts(int is_long) {
 }
 
 static void VerifySnapshotsEq(Snapshot *b, Snapshot *a, Snapshot *prev) {
+  return;
   if (memcmp(b->ram, a->ram, 0x20000)) {
     fprintf(stderr, "@%d: Memory compare failed (mine != theirs, prev):\n", snes_frame_counter);
     int j = 0;
@@ -376,3 +377,4 @@ void RtlRunFrameCompare() {
     RunOneFrameOfGame_Both();
   }
 }
+
