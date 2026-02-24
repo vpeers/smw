@@ -474,6 +474,7 @@ static bool ParseOneConfigFile(const char *filename, int depth) {
         fprintf(stderr, "%s:%d: Can't parse '%s'\n", filename, lineno, p);
     }
   }
+  GamepadMap_Add(kGamepadBtn_L2, 0, kKeys_Load);
   return true;
 }
 
@@ -489,3 +490,4 @@ void ParseConfigFile(const char *filename) {
   }
   RegisterDefaultKeys();
 }
+
