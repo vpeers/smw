@@ -908,39 +908,42 @@ void BufferScrollingTiles_Layer1_VerticalLevel() {  // 058a9b
   } while ((r8 & 0x10F) != 0);
 }
 
-void BufferScrollingTiles_Layer2() {  // 058b8d
-  int16 v1 = 0;
-  if (misc_level_tileset_setting == 3)
-    v1 = 0x1000;
-  uint16 R3_W = v1;
+static inline uint16 ReadTile16(const uint8* plo, size_t plo_size, uint16 index) {
+    if (index + 0x100 >= plo_size) {
+        return 0;
+    }
+    return plo[index] | (plo[index + 0x100] << 8);
+}
+void BufferScrollingTiles_Layer2() {
+    uint16 R3_W = (misc_level_tileset_setting == 3) ? 0x1000 : 0;
+    const uint16 *r10 = kLevelDataLayoutTables_Layer2LoPtrs[misc_level_mode_setting];
+    uint16 v0 = camera_layer2_scrolling_direction;
+    uint8 row_col_byte = *((uint8*)&camera_layer2_row_column_to_update_left_up + v0);
+    HIBYTE(blocks_layer2_vramupload_address) = 2 * (row_col_byte & 0xF);
+    int8 v2 = (row_col_byte & 0x10) ? 52 : 48;
+    LOBYTE(blocks_layer2_vramupload_address) = v2;
+    uint16 lm_mask = g_lunar_magic ? 0x3FF0 : 0x1F0;
+    uint8* p16 = (uint8*)&camera_layer2_row_column_to_update_left_up + v0;
+    uint16 row_col_16 = p16[0] | (p16[1] << 8);
+    uint16 R0_W = (row_col_16 & lm_mask) >> 4;
+    const uint8* plo = g_ram + r10[R0_W];
+    uint8 bank = (misc_level_tileset_setting < 16) ? 13 : 5;
+    uint16 r8 = row_col_byte & 0xF;
+    uint16 v5 = 0;
+    do {
+        uint16 v6 = r8;
+        uint16 tile_index = ReadTile16(plo, sizeof(plo), v6);
+        const uint16* r10w = Lm_GetMap16RomAddr(tile_index);
+        int v7 = v5 >> 1;
+        blocks_layer2_tiles_to_upload_buffer[v7]      = R3_W | r10w[0];
+        blocks_layer2_tiles_to_upload_buffer[v7 + 1]  = R3_W | r10w[1];
+        blocks_layer2_tiles_to_upload_buffer[v7 + 64] = R3_W | r10w[2];
+        blocks_layer2_tiles_to_upload_buffer[v7 + 65] = R3_W | r10w[3];
+        v5 += 4;
+        r8 += 16;
+        if (r8 >= 0x1B0) break;
 
-  const uint16 *r10 = kLevelDataLayoutTables_Layer2LoPtrs[misc_level_mode_setting];
-  
-  uint16 v0 = camera_layer2_scrolling_direction;
-  HIBYTE(blocks_layer2_vramupload_address) = 2 * (*((uint8 *)&camera_layer2_row_column_to_update_left_up + v0) & 0xF);
-  int8 v2 = 48;
-  if ((*((uint8 *)&camera_layer2_row_column_to_update_left_up + v0) & 0x10) != 0)
-    v2 = 52;
-  LOBYTE(blocks_layer2_vramupload_address) = v2;
-  uint16 lm_mask = g_lunar_magic ? 0x3ff0 : 0x1f0;
-  uint16 R0_W = (uint16)(*(uint16 *)((int8 *)&camera_layer2_row_column_to_update_left_up + v0) & lm_mask) >> 4;
-  const uint8 *plo = g_ram + r10[R0_W];
-
-  uint8 bank = sign8(misc_level_tileset_setting - 16) ? 13 : 5;
-  uint16 r8 = *((uint8 *)&camera_layer2_row_column_to_update_left_up + v0) & 0xF;
-  uint16 v5 = 0;
-  do {
-    uint16 v6 = r8;
-    R0_W = plo[r8] | plo[v6 + 0x10000] << 8;
-    const uint16 *r10w = Lm_GetMap16RomAddr(R0_W);
-    int v7 = v5 >> 1;
-    blocks_layer2_tiles_to_upload_buffer[v7] = R3_W | r10w[0];
-    blocks_layer2_tiles_to_upload_buffer[v7 + 1] = R3_W | r10w[1];
-    blocks_layer2_tiles_to_upload_buffer[v7 + 64] = R3_W | r10w[2];
-    blocks_layer2_tiles_to_upload_buffer[v7 + 65] = R3_W | r10w[3];
-    v5 += 4;
-    r8 += 16;
-  } while (r8 < 0x1B0);
+    } while (1);
 }
 
 void BufferScrollingTiles_Layer2_NoScroll() {  // 058c70
@@ -2611,4 +2614,5 @@ void Spr07B_GoalTape_GiveBonusStars(uint8 k) {  // 07f252
   if (counter_bonus_stars_earned == 80)
     GivePoints(k, 0xA);
 }
+
 
