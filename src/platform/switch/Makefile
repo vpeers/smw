@@ -46,7 +46,7 @@ CFILES		:=	$(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/snes/*.c $(SRC_DIR)/platform/swi
 
 INCLUDES	:=	include $(SRC_DIR)/.. ./src/
 APP_TITLE	:=	Super Mario World
-APP_AUTHOR	:=	snesrev & Lywx
+APP_AUTHOR	:=	snesrev & Lywx, patched by Vpeers
 APP_VERSION	:=	$(shell git rev-parse --short HEAD) $(shell git rev-parse --abbrev-ref HEAD)
 
 #---------------------------------------------------------------------------------
