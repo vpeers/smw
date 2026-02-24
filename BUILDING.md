@@ -107,14 +107,23 @@ Dependencies and requirements:
   
 1. Make sure you've installed Atmosphere on your Switch.
 2. Please download the DevKitPro version of MSYS2 through their installer, as the default MSYS2 causes issues with windows compiling.
-3. Now that you've installed DevKitPro, open up the location you've installed DevKitPro to, then find `mingw64.exe` inside `msys2` located in `devkitPro` folder.
-4. Type `pacman -S git switch-dev switch-sdl2 switch-tools pkg-config` in the terminal to install the `switch-sdl2` library.
-5. CD to `switch` folder by typing `cd src/platform/switch` in the terminal on the `smw` root folder.
-6. type `make` to compile the Switch Port.
-7. Transfer the `.ini`, `nro`, `ncap` and your rom file to the Switch.
+3. Type `pacman -S git switch-dev switch-sdl2 switch-tools pkg-config` in the terminal to install the `switch-sdl2` library.
+   ```sh
+   git clone https://github.com/vpeers/smw.git
+   cd smw
+   ```
+4. place smw.sfc into smw directory
+5. move smw.sfc onto extract_assets.bat
+6. ```sh
+   python assets\restool.py
+   ```
+8. CD to `switch` folder by typing `cd src/platform/switch` in the terminal on the `smw` root folder.
+9. type `make` to compile the Switch Port.
+10. Transfer the `.ini`, `nro`, `ncap` and your rom file to the Switch.
 
 **OPTIONAL STEP**
 
 ```sh
 make -j$(nproc) # To build using all cores
 ```
+
