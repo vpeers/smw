@@ -40,6 +40,7 @@ void ThrowMissingROM() {
     PrintErrorMessageToScreen(
         "\x1b[2;2HYou've launched Super Mario World without the rom file."
         "\x1b[4;2HPlease relaunch making sure smw.sfc exists."
+        "\x1b[5;2HIf it exists uncomment 1 line in main.c"
         "\x1b[44;2HMade with <3 by snesrev and Lywx"
     );
 }
