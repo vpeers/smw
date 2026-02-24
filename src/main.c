@@ -1,3 +1,4 @@
+//#define __FILEPATCH__
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -422,7 +423,13 @@ int main(int argc, char** argv) {
   } else {
     g_renderer_funcs = kSdlRendererFuncs;
   }
-
+#ifdef __FILEPATCH__
+   size_t size;
+   kRom = ReadWholeFile("smw.sfc", &size);
+    kRom_SIZE = (uint32)size;
+    if (!kRom)
+      goto error_reading;
+#else
   if (argv[0]) {
     size_t size;
     kRom = ReadWholeFile(argv[0], &size);
@@ -430,6 +437,8 @@ int main(int argc, char** argv) {
     if (!kRom)
       goto error_reading;
   }
+#endif
+
 
   Snes *snes = SnesInit(kRom, kRom_SIZE);
   if (snes == NULL) {
@@ -997,5 +1006,6 @@ static void SwitchDirectory(void) {
       pos--;
   }
 }
+
 
 
