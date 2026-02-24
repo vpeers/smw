@@ -1,7 +1,6 @@
 # smw
 A reimplementation of Super Mario World.
-
-Our discord server is: https://discord.gg/AJJbJAzNNJ
+Patched by vpeers
 
 ## About
 
@@ -24,7 +23,7 @@ You must self-build for now. Easy method on 64-bit Windows (no terminal or big d
 (6) Double-click "run_with_tcc.bat" in the main dir. This will create smw.exe and run it.<br>
 (7) Configure with smw.ini in a text editor like notepad++<br>
 
-For other platforms and compilers, see: https://github.com/snesrev/smw/blob/main/BUILDING.md
+For other platforms and compilers, see: https://github.com/vpeers/smw/blob/main/BUILDING.md
 
 When running, it runs an emulated version in the background and compares the ram state every frame. If it detects a mismatch, it saves a snapshot in saves/ and displays a counter on screen counting down from 300. Please submit these bug snapshots on discord so that they can be fixed.
 
@@ -67,3 +66,4 @@ Additionally, the following commands are available:
 | Alt+Enter | Toggle Fullscreen     |
 | Shift+F1-F10 | Save snapshot |
 | Ctrl+F1-F10 | Replay the snapshot |
+
