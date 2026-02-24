@@ -62,8 +62,9 @@ Additionally, the following commands are available:
 | L   | Stop replaying a shapshot  |
 | R   | Toggle between fast and slow renderer |
 | F   | Display renderer performance |
-| F1-F10 | Load snapshot      |
+| F1-F10 or L2| Load snapshot      |
 | Alt+Enter | Toggle Fullscreen     |
 | Shift+F1-F10 | Save snapshot |
 | Ctrl+F1-F10 | Replay the snapshot |
+
 
