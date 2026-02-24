@@ -27,6 +27,7 @@
 #include "snes/snes.h"
 #ifdef __SWITCH__
 #include "switch_impl.h"
+#include <switch.h>
 #endif
 
 #include "assets/smw_assets.h"
@@ -95,8 +96,31 @@ extern Snes *g_snes;
 void NORETURN Die(const char *error) {
   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, kWindowTitle, error, NULL);
   fprintf(stderr, "Error: %s\n", error);
+  #ifdef __SWITCH__
+  PrintErrorMessageToScreen_a(
+        "\x1b[2;2HERROR: %s", error
+    );
+  #else
   exit(1);
+  #endif
 }
+
+#ifdef __SWITCH__
+void PrintErrorMessageToScreen_a(const char* str, ...) {
+    consoleInit(NULL);
+
+    va_list args;
+    va_start(args, str);
+    vprintf(str, args);
+    va_end(args);
+
+    while (appletMainLoop()) {
+        consoleUpdate(NULL);
+    }
+
+    consoleExit(NULL);
+}
+#endif
 
 void Warning(const char *error) {
   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, kWindowTitle, error, NULL);
@@ -975,3 +999,4 @@ static void SwitchDirectory(void) {
       pos--;
   }
 }
+
