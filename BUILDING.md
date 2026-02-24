@@ -108,13 +108,13 @@ Dependencies and requirements:
 1. Make sure you've installed Atmosphere on your Switch.
 2. Please download the DevKitPro version of MSYS2 through their installer, as the default MSYS2 causes issues with windows compiling.
 3. Type `pacman -S git switch-dev switch-sdl2 switch-tools pkg-config` in the terminal to install the `switch-sdl2` library.
-   ```sh
+4. ```sh
    git clone https://github.com/vpeers/smw.git
    cd smw
    ```
-4. place smw.sfc into smw directory
-5. move smw.sfc onto extract_assets.bat
-6. ```sh
+5. place smw.sfc into smw directory
+6. move smw.sfc onto extract_assets.bat
+7. ```sh
    python assets\restool.py
    ```
 8. CD to `switch` folder by typing `cd src/platform/switch` in the terminal on the `smw` root folder.
@@ -126,4 +126,5 @@ Dependencies and requirements:
 ```sh
 make -j$(nproc) # To build using all cores
 ```
+
 
